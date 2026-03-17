@@ -1,4 +1,4 @@
-﻿using Nikse.SubtitleEdit.Core.Common;
+using Nikse.SubtitleEdit.Core.Common;
 using Nikse.SubtitleEdit.Core.Translate;
 using System;
 using System.Collections.Generic;
@@ -70,8 +70,8 @@ namespace Nikse.SubtitleEdit.Core.AutoTranslate
                 MakeTranslationPair("Swedish", "sv", false),
                 MakeTranslationPair("Ukrainian", "uk", false),
 
-                // English (DeepL Supports EN as Source Language; Variants are now target-only)
-                MakeTranslationPair("English", "en", false),
+                // English (DeepL supports EN as source language; variants are target-only)
+                MakeTranslationPair("English", "EN", false),
 
                 // Spanish Variants
                 MakeTranslationPair("Spanish", "es", true),
@@ -122,7 +122,6 @@ namespace Nikse.SubtitleEdit.Core.AutoTranslate
                 MakeTranslationPair("Swedish", "sv", false),
                 MakeTranslationPair("Ukrainian", "uk", false),
 
-                // English Variants (Formality is NOT supported for English)
                 MakeTranslationPair("English (British)", "en-GB", false),
                 MakeTranslationPair("English (American)", "en-US", false),
 
@@ -230,7 +229,7 @@ namespace Nikse.SubtitleEdit.Core.AutoTranslate
         private FormUrlEncodedContent MakeContent(string text, string sourceLanguageCode, string targetLanguageCode)
         {
             sourceLanguageCode = NormalizeSourceLanguageCode(sourceLanguageCode);
-            
+
             var array = new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("text", text),
