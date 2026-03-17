@@ -70,9 +70,8 @@ namespace Nikse.SubtitleEdit.Core.AutoTranslate
                 MakeTranslationPair("Swedish", "sv", false),
                 MakeTranslationPair("Ukrainian", "uk", false),
 
-                // English Variants (Formality is NOT supported for English)
-                MakeTranslationPair("English (British)", "en-GB", false),
-                MakeTranslationPair("English (American)", "en-US", false),
+                // English (DeepL Supports EN as Source Language; Variants are now target-only)
+                MakeTranslationPair("English", "en", false),
 
                 // Spanish Variants
                 MakeTranslationPair("Spanish", "es", true),
@@ -230,6 +229,8 @@ namespace Nikse.SubtitleEdit.Core.AutoTranslate
 
         private FormUrlEncodedContent MakeContent(string text, string sourceLanguageCode, string targetLanguageCode)
         {
+            sourceLanguageCode = NormalizeSourceLanguageCode(sourceLanguageCode);
+            
             var array = new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("text", text),
@@ -245,6 +246,25 @@ namespace Nikse.SubtitleEdit.Core.AutoTranslate
             }
 
             return new FormUrlEncodedContent(array);
+        }
+
+        private static string NormalizeSourceLanguageCode(string sourceLanguageCode)
+        {
+            if (string.IsNullOrWhiteSpace(sourceLanguageCode))
+            {
+                return sourceLanguageCode;
+            }
+
+            var code = sourceLanguageCode.Trim();
+
+            if (code.Equals("en", StringComparison.OrdinalIgnoreCase) ||
+                code.Equals("en-us", StringComparison.OrdinalIgnoreCase) ||
+                code.Equals("en-gb", StringComparison.OrdinalIgnoreCase))
+            {
+                return "EN";
+            }
+
+            return code;
         }
 
         public void Dispose()
